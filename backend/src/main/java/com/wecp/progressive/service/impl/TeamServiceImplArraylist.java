@@ -1,41 +1,51 @@
 package com.wecp.progressive.service.impl;
-
+ 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
+ 
 import com.wecp.progressive.dao.TeamDAO;
 import com.wecp.progressive.entity.Team;
 import com.wecp.progressive.service.TeamService;
-
-public class TeamServiceImplArraylist implements TeamService {
-    private TeamDAO teamDAO;
-
-    private static List<Team> teams = new ArrayList<>();
-
+ 
+public class TeamServiceImplArraylist implements TeamService  {
+   // private static List<Team> teamList=new ArrayList<>();
+   
+    private static List<Team> teamList=new ArrayList<>();
+ 
     @Override
     public List<Team> getAllTeams() {
-        
-        return teams;
+        return teamList;
+        //return List.of();
+       
     }
-
+ 
     @Override
     public int addTeam(Team team) {
-        teams.add(team);
-        return  teams.size();
+        // TODO Auto-generated method stub
+       
+       // throw new UnsupportedOperationException("Unimplemented method 'addTeam'");
+       //return -1;
+       teamList.add(team);
+       return teamList.size();
     }
-
+ 
     @Override
     public List<Team> getAllTeamsSortedByName() {
-        Collections.sort(teams);
-        return teams;
+        // TODO Auto-generated method stub
+       // return List.of();
+       List<Team> sortedTeam=teamList;
+       sortedTeam.sort(Comparator.comparing(Team::getTeamName));
+       return sortedTeam;
+       
+       // throw new UnsupportedOperationException("Unimplemented method 'getAllTeamsSortedByName'");
     }
-
     @Override
     public void emptyArrayList(){
-        teams =  new ArrayList<>();
-
+        teamList=new ArrayList<>();
+        //TeamService.super.emptyArrayList();
     }
-
-
+ 
+   
+ 
 }
