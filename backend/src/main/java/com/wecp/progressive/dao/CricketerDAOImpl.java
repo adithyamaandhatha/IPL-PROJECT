@@ -1,52 +1,28 @@
 package com.wecp.progressive.dao;
- 
+
 import com.wecp.progressive.config.DatabaseConnectionManager;
 import com.wecp.progressive.entity.Cricketer;
- 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
- 
+
 public class CricketerDAOImpl implements CricketerDAO {
- 
-    // @Override
-    // public int addCricketer(Cricketer cricketer) {
-    //     return -1;
- 
-    // }
- 
-    // @Override
-    // public Cricketer getCricketerById(int cricketerId) {
-    //     return null;
-    // }
- 
-    // @Override
-    // public void updateCricketer(Cricketer cricketer) {
-    // }
- 
-    // @Override
-    // public void deleteCricketer(int cricketerId) {
-    // }
- 
-    // @Override
-    // public List<Cricketer> getAllCricketers() {
-    //     return List.of();
-    // }
- 
+
     @Override
     public int addCricketer(Cricketer cricketer) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         int generatedID = -1;
- 
+
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "INSERT INTO cricketer (team_id, cricketer_name, age, nationality, experience, role, total_runs, total_wickets) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
- 
+
             statement.setInt(1, cricketer.getTeamId());
             statement.setString(2, cricketer.getCricketerName());
             statement.setInt(3, cricketer.getAge());
@@ -55,9 +31,9 @@ public class CricketerDAOImpl implements CricketerDAO {
             statement.setString(6, cricketer.getRole());
             statement.setInt(7, cricketer.getTotalRuns());
             statement.setInt(8, cricketer.getTotalWickets());
- 
+
             statement.executeUpdate();
- 
+
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 generatedID = resultSet.getInt(1);
@@ -76,20 +52,21 @@ public class CricketerDAOImpl implements CricketerDAO {
         }
         return generatedID;
     }
- 
+
+
     @Override
     public Cricketer getCricketerById(int cricketerId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
- 
+
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "SELECT * FROM cricketer WHERE cricketer_id = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, cricketerId);
             resultSet = statement.executeQuery();
- 
+
             if (resultSet.next()) {
                 int teamId = resultSet.getInt("team_id");
                 String cricketerName = resultSet.getString("cricketer_name");
@@ -99,7 +76,7 @@ public class CricketerDAOImpl implements CricketerDAO {
                 String role = resultSet.getString("role");
                 int totalRuns = resultSet.getInt("total_runs");
                 int totalWickets = resultSet.getInt("total_wickets");
- 
+
                 return new Cricketer(cricketerId, teamId, cricketerName, age, nationality, experience, role, totalRuns, totalWickets);
             }
         } catch (SQLException e) {
@@ -118,13 +95,13 @@ public class CricketerDAOImpl implements CricketerDAO {
         }
         return null;
     }
- 
- 
+
+
     @Override
     public void updateCricketer(Cricketer cricketer) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
- 
+
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "UPDATE cricketer SET team_id = ?, cricketer_name = ?, age = ?, nationality = ?, experience = ?, role = ?, total_runs = ?, total_wickets = ? WHERE cricketer_id = ?";
@@ -148,13 +125,13 @@ public class CricketerDAOImpl implements CricketerDAO {
             }
         }
     }
- 
- 
+
+
     @Override
     public void deleteCricketer(int cricketerId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
- 
+
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "DELETE FROM cricketer WHERE cricketer_id = ?";
@@ -170,20 +147,20 @@ public class CricketerDAOImpl implements CricketerDAO {
             }
         }
     }
- 
+
     @Override
     public List<Cricketer> getAllCricketers() throws SQLException {
         List<Cricketer> cricketers = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
- 
+
         try {
             connection = DatabaseConnectionManager.getConnection();
             String sql = "SELECT * FROM cricketer";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
- 
+
             while (resultSet.next()) {
                 int cricketerId = resultSet.getInt("cricketer_id");
                 int teamId = resultSet.getInt("team_id");
@@ -206,5 +183,8 @@ public class CricketerDAOImpl implements CricketerDAO {
         }
         return cricketers;
     }
- 
+
 }
+
+
+

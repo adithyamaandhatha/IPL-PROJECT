@@ -1,17 +1,13 @@
 package com.wecp.progressive.entity;
+ 
 import java.util.Date;
  
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
- 
- 
+import javax.persistence.*;
  
 @Entity
 public class Match {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int matchId;
     private int firstTeamId;
     private int secondTeamId;
@@ -20,10 +16,8 @@ public class Match {
     private String result;
     private String status;
     private int winnerTeamId;
-    public Match(){
- 
+    public Match() {
     }
-   
     public Match(int matchId, int firstTeamId, int secondTeamId, Date matchDate, String venue, String result,
             String status, int winnerTeamId) {
         this.matchId = matchId;
@@ -84,6 +78,4 @@ public class Match {
         this.winnerTeamId = winnerTeamId;
     }
    
- 
- 
 }

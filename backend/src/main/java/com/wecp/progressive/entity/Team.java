@@ -1,25 +1,21 @@
 package com.wecp.progressive.entity;
-import java.util.Comparator;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-import javax.persistence.Id;
+ 
+import javax.persistence.*;
  
 @Entity
-public class Team implements Comparable<Team> {
+public class Team implements Comparable<Team>{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId;
     private String teamName;
     private String location;
     private String ownerName;
     private int establishmentYear;
-    public Team(){
- 
+   
+    public Team() {
     }
    
-   
-     public Team(int teamId, String teamName, String location, String ownerName, int establishmentYear) {
+    public Team(int teamId, String teamName, String location, String ownerName, int establishmentYear) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.location = location;
@@ -78,11 +74,10 @@ public class Team implements Comparable<Team> {
         this.establishmentYear = establishmentYear;
     }
  
-@Override
-    public int compareTo(Team t){
-        return this.getTeamName().compareTo(t.getTeamName());
-    }
-   
  
+    @Override
+    public int compareTo(Team o) {
+            //  throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    return this.getTeamName().compareTo(o.getTeamName());
+        }
 }
- 
