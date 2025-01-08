@@ -11,17 +11,19 @@ import org.springframework.stereotype.Repository;
 import com.wecp.progressive.entity.Vote;
 
 @Repository
-public interface VoteRepository extends JpaRepository<Vote,Integer>{
-
+public interface VoteRepository extends JpaRepository<Vote , Integer>{
+    
+    //@Query("SELECT COUNT(v) FROM Vote v WHERE v.category = :category")
     Long countByCategory(String category);
 
     @Modifying
     @Transactional
-    @Query("DELETE v FROM Vote v WHERE v.team.teamId = :teamId")
+    @Query("DELETE FROM Vote t WHERE t.team.teamId = :teamId")
     void deleteByTeamId(int teamId);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Vote v WHERE v.cricketer.cricketerId = :cricketerId")
-    void deleteByCricketerId(@Param("cricketerId") int cricketerId);
+    @Query("DELETE FROM Vote c WHERE c.cricketer.cricketerId = :cricketerId")
+    void deleteByCricketerId(int cricketerId);
+
 }
